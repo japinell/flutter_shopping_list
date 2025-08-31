@@ -17,5 +17,5 @@ class Category {
   final String name;
   final Color color;
 
-  Category(this.name, this.color);
+  const Category(this.name, this.color);
 }
