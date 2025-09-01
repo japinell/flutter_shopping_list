@@ -23,7 +23,7 @@ class _NewItemState extends State<NewItem> {
   //var _selectedCategory = categories.entries.first.value;
   var _selectedCategory = categories[Categories.vegetables];
 
-  void _saveItem() {
+  void _saveItem() async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
 
@@ -31,7 +31,7 @@ class _NewItemState extends State<NewItem> {
       final databaseTable = dotenv.env["DATABASE_TABLE"];
       final url = Uri.https(databaseUrl!, "$databaseTable.json");
 
-      http.post(
+      final response = await http.post(
         url,
         headers: {"Content-Type": "application/json"},
         body: json.encode({
@@ -40,6 +40,15 @@ class _NewItemState extends State<NewItem> {
           "category": _selectedCategory!.name,
         }),
       );
+
+      print(response.body);
+      print(response.statusCode);
+
+      if (!context.mounted) {
+        return;
+      }
+
+      Navigator.of(context).pop();
 
       // Navigator.of(context).pop(
       //   GroceryItem(
