@@ -80,7 +80,7 @@ class _GroceryListState extends State<GroceryList> {
   void _removeItem(GroceryItem item) async {
     final databaseUrl = dotenv.env["DATABASE_URL"];
     final databaseTable = dotenv.env["DATABASE_TABLE"];
-    final url = Uri.https(databaseUrl!, "$databaseTable/${item.name}.json");
+    final url = Uri.https(databaseUrl!, "$databaseTable/${item.id}.json");
 
     final response = await http.delete(url);
 
