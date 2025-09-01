@@ -4,6 +4,16 @@
 
 This is a cross-platform shopping list application built with **Flutter** and **Dart**. It demonstrates state management, asynchronous data fetching, and CRUD operations with a remote database. The app allows users to add, view, and remove grocery items, organized by category.
 
+## Features
+
+- Add grocery items to your shopping list
+- Categorize items for better organization
+- Remove items from the list
+- Persist data to a Firebase Realtime Database
+- Responsive UI for mobile and desktop
+- Environment-based configuration using `.env` file
+- Simple and intuitive user interface
+
 ## User Stories
 
 ```
