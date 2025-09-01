@@ -76,7 +76,7 @@ class _GroceryListState extends State<GroceryList> {
     return _groceryItems = jsonParsedItems;
   }
 
-  void _removeItem(GroceryItem item) async {
+  Future<void> _removeItem(GroceryItem item) async {
     final databaseUrl = dotenv.env["DATABASE_URL"];
     final databaseTable = dotenv.env["DATABASE_TABLE"];
     final url = Uri.https(databaseUrl!, "$databaseTable/${item.id}.json");
@@ -84,10 +84,7 @@ class _GroceryListState extends State<GroceryList> {
     final response = await http.delete(url);
 
     if (response.statusCode >= 400) {
-      setState(() {
-        _errorMessage =
-            "Failed to delete grocery item. Please try again later.";
-      });
+      throw Exception("Failed to delete grocery item. Please try again later.");
     }
 
     setState(() {
