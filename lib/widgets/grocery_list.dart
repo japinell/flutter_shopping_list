@@ -77,7 +77,20 @@ class _GroceryListState extends State<GroceryList> {
     });
   }
 
-  void _removeItem(GroceryItem item) {
+  void _removeItem(GroceryItem item) async {
+    final databaseUrl = dotenv.env["DATABASE_URL"];
+    final databaseTable = dotenv.env["DATABASE_TABLE"];
+    final url = Uri.https(databaseUrl!, "$databaseTable/${item.name}.json");
+
+    final response = await http.delete(url);
+
+    if (response.statusCode >= 400) {
+      setState(() {
+        _errorMessage =
+            "Failed to delete grocery item. Please try again later.";
+      });
+    }
+
     setState(() {
       _groceryItems.remove(item);
     });
