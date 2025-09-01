@@ -48,9 +48,6 @@ class _NewItemState extends State<NewItem> {
 
       final Map<String, dynamic> jsonGroceryItems = json.decode(response.body);
 
-      print(response.body);
-      print(response.statusCode);
-
       if (!context.mounted) {
         return;
       }
