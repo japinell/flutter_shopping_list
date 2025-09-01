@@ -46,6 +46,7 @@ class _NewItemState extends State<NewItem> {
                   Expanded(
                     child: TextFormField(
                       decoration: InputDecoration(label: Text("Quantity")),
+                      keyboardType: TextInputType.number,
                       initialValue: "1",
                       validator: (value) {
                         if (value == null ||
