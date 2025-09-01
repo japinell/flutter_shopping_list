@@ -26,6 +26,12 @@ class _GroceryListState extends State<GroceryList> {
     });
   }
 
+  void _removeItem(GroceryItem item) {
+    setState(() {
+      _groceryItems.remove(item);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     Widget content = Center(child: Text("No items have been added yet."));
@@ -33,29 +39,20 @@ class _GroceryListState extends State<GroceryList> {
     if (_groceryItems.isNotEmpty) {
       content = ListView.builder(
         itemCount: _groceryItems.length,
-        itemBuilder: (ctx, idx) => ListTile(
-          title: Text(_groceryItems[idx].name),
-          leading: Container(
-            width: 24,
-            height: 24,
-            color: _groceryItems[idx].category.color,
+        itemBuilder: (ctx, idx) => Dismissible(
+          key: ValueKey(_groceryItems[idx].id),
+          onDismissed: (direction) {
+            _removeItem(_groceryItems[idx]);
+          },
+          child: ListTile(
+            title: Text(_groceryItems[idx].name),
+            leading: Container(
+              width: 24,
+              height: 24,
+              color: _groceryItems[idx].category.color,
+            ),
+            trailing: Text(_groceryItems[idx].quantity.toString()),
           ),
-          trailing: Text(_groceryItems[idx].quantity.toString()),
-        ),
-      );
-    }
-
-    if (_groceryItems.isNotEmpty) {
-      content = ListView.builder(
-        itemCount: _groceryItems.length,
-        itemBuilder: (ctx, idx) => ListTile(
-          title: Text(_groceryItems[idx].name),
-          leading: Container(
-            width: 24,
-            height: 24,
-            color: _groceryItems[idx].category.color,
-          ),
-          trailing: Text(_groceryItems[idx].quantity.toString()),
         ),
       );
     }
