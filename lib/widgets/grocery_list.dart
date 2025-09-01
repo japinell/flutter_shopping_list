@@ -1,4 +1,9 @@
 import "package:flutter/material.dart";
+import "package:flutter_shopping_list/data/categories.dart";
+import "package:http/http.dart" as http;
+import "dart:convert";
+import "package:flutter_dotenv/flutter_dotenv.dart";
+
 import "package:flutter_shopping_list/models/grocery_item.dart";
 import "package:flutter_shopping_list/widgets/new_item.dart";
 
@@ -10,19 +15,48 @@ class GroceryList extends StatefulWidget {
 }
 
 class _GroceryListState extends State<GroceryList> {
-  final List<GroceryItem> _groceryItems = [];
+  List<GroceryItem> _groceryItems = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchItems();
+  }
 
   void _addNewItem() async {
-    final newItem = await Navigator.of(
+    await Navigator.of(
       context,
     ).push<GroceryItem>(MaterialPageRoute(builder: (ctx) => const NewItem()));
 
-    if (newItem == null) {
-      return;
+    _fetchItems();
+  }
+
+  void _fetchItems() async {
+    final databaseUrl = dotenv.env["DATABASE_URL"];
+    final databaseTable = dotenv.env["DATABASE_TABLE"];
+    final url = Uri.https(databaseUrl!, "$databaseTable.json");
+
+    final response = await http.get(url);
+    final Map<String, dynamic> jsonGroceryItems = json.decode(response.body);
+    final List<GroceryItem> jsonParsedItems = [];
+
+    for (final item in jsonGroceryItems.entries) {
+      final category = categories.entries
+          .firstWhere((cat) => cat.value.name == item.value["category"])
+          .value;
+
+      jsonParsedItems.add(
+        GroceryItem(
+          id: item.key,
+          name: item.value["name"],
+          quantity: item.value["quantity"],
+          category: category,
+        ),
+      );
     }
 
     setState(() {
-      _groceryItems.add(newItem);
+      _groceryItems = jsonParsedItems;
     });
   }
 
