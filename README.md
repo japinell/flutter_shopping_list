@@ -101,14 +101,30 @@ Screen for adding a new grocery item to the list.
 
 ## Configuration
 
-Create a `.env` file in the project root with the following variables:
+### Firebase Setup
 
-```
-DATABASE_URL=your-database-url
-DATABASE_TABLE=your-database-table
-```
+To use Firebase as your backend database:
 
-This is required for remote data storage and retrieval.
+1. Go to [Firebase Console](https://console.firebase.google.com/) and create a new project.
+2. In the project dashboard, select "Realtime Database" from the left menu and click "Create Database".
+3. Choose a location and set the database rules to public for testing (not recommended for production):
+   ```json
+   {
+     "rules": {
+       ".read": true,
+       ".write": true
+     }
+   }
+   ```
+4. Copy your database URL from the Realtime Database section (it looks like `https://your-project-id.firebaseio.com`).
+5. In your project root, create a `.env` file and add:
+   ```
+   DATABASE_URL=your-project-id.firebaseio.com
+   DATABASE_TABLE=your-table-name
+   ```
+   Replace `your-table-name` with the node you want to use for storing grocery items (e.g., `grocery-items`).
+
+This configuration is required for remote data storage and retrieval.
 
 ## Packages Used
 
