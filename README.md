@@ -56,7 +56,15 @@ Fetches the grocery list from the backend database.
 Saves the grocery item to the backend database.
 ```
 
-![Flutter shopping list - Grocery List retrieval.](./assets/images/new-item-save.png)
+![Flutter shopping list - Grocery Item save.](./assets/images/new-item-save.png)
+
+```
+--\lib\widgets\grocery_list.dart:
+
+Removes a grocery item from the backend database.
+```
+
+![Flutter shopping list - Grocery List remove.](./assets/images/grocery-list-remove.png)
 
 ## Main Screens
 
