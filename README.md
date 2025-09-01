@@ -53,7 +53,7 @@ Fetches the grocery list from the backend database.
 ```
 --\lib\widgets\new_item.dart:
 
-Saves the grocery to the backend database.
+Saves the grocery item to the backend database.
 ```
 
 ![Flutter shopping list - Grocery List retrieval.](./assets/images/new-item-save.png)
