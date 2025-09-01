@@ -22,10 +22,15 @@ class _NewItemState extends State<NewItem> {
   var _enteredQuantity = 1;
   //var _selectedCategory = categories.entries.first.value;
   var _selectedCategory = categories[Categories.vegetables];
+  var _isLoading = false;
 
   void _saveItem() async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
+
+      setState(() {
+        _isLoading = true;
+      });
 
       final databaseUrl = dotenv.env["DATABASE_URL"];
       final databaseTable = dotenv.env["DATABASE_TABLE"];
@@ -152,14 +157,22 @@ class _NewItemState extends State<NewItem> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   TextButton(
-                    onPressed: () {
-                      _formKey.currentState!.reset();
-                    },
+                    onPressed: _isLoading
+                        ? null
+                        : () {
+                            _formKey.currentState!.reset();
+                          },
                     child: const Text("Reset"),
                   ),
                   ElevatedButton(
-                    onPressed: _saveItem,
-                    child: const Text("Add Item"),
+                    onPressed: _isLoading ? null : _saveItem,
+                    child: _isLoading
+                        ? const SizedBox(
+                            width: 16,
+                            height: 16,
+                            child: CircularProgressIndicator(),
+                          )
+                        : const Text("Add Item"),
                   ),
                 ],
               ),
