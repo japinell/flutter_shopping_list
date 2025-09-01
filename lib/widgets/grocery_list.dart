@@ -1,6 +1,5 @@
 import "package:flutter/material.dart";
 import "package:flutter_shopping_list/data/categories.dart";
-import "package:flutter_shopping_list/data/dummy_items.dart";
 import "package:http/http.dart" as http;
 import "dart:convert";
 import "package:flutter_dotenv/flutter_dotenv.dart";
