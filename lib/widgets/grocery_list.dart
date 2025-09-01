@@ -44,44 +44,50 @@ class _GroceryListState extends State<GroceryList> {
     final databaseTable = dotenv.env["DATABASE_TABLE"];
     final url = Uri.https(databaseUrl!, "$databaseTable.json");
 
-    final response = await http.get(url);
+    try {
+      final response = await http.get(url);
 
-    if (response.statusCode >= 400) {
-      setState(() {
-        _errorMessage =
-            "Failed to fetch grocery items. Please try again later.";
-      });
-    }
+      if (response.statusCode >= 400) {
+        setState(() {
+          _errorMessage =
+              "Failed to fetch grocery items. Please try again later.";
+        });
+      }
 
-    if (response.body == "null") {
+      if (response.body == "null") {
+        setState(() {
+          _isLoading = false;
+        });
+        return;
+      }
+
+      final Map<String, dynamic> jsonGroceryItems = json.decode(response.body);
+      final List<GroceryItem> jsonParsedItems = [];
+
+      for (final item in jsonGroceryItems.entries) {
+        final category = categories.entries
+            .firstWhere((cat) => cat.value.name == item.value["category"])
+            .value;
+
+        jsonParsedItems.add(
+          GroceryItem(
+            id: item.key,
+            name: item.value["name"],
+            quantity: item.value["quantity"],
+            category: category,
+          ),
+        );
+      }
+
       setState(() {
+        _groceryItems = jsonParsedItems;
         _isLoading = false;
       });
-      return;
+    } catch (error) {
+      setState(() {
+        _errorMessage = "Failed to fetch grocery items. $error";
+      });
     }
-
-    final Map<String, dynamic> jsonGroceryItems = json.decode(response.body);
-    final List<GroceryItem> jsonParsedItems = [];
-
-    for (final item in jsonGroceryItems.entries) {
-      final category = categories.entries
-          .firstWhere((cat) => cat.value.name == item.value["category"])
-          .value;
-
-      jsonParsedItems.add(
-        GroceryItem(
-          id: item.key,
-          name: item.value["name"],
-          quantity: item.value["quantity"],
-          category: category,
-        ),
-      );
-    }
-
-    setState(() {
-      _groceryItems = jsonParsedItems;
-      _isLoading = false;
-    });
   }
 
   void _removeItem(GroceryItem item) async {
