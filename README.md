@@ -69,7 +69,6 @@ Removes a grocery item from the backend database.
 ## Main Screens
 
 ```
---\lib\widgets\grocery_list.dart:
 
 Main screen. Displays the list of grocery items, allows adding and removing items.
 ```
@@ -77,12 +76,47 @@ Main screen. Displays the list of grocery items, allows adding and removing item
 ![Flutter shopping list - Grocery List screen.](./assets/images/grocery-list-screen.png)
 
 ```
---\lib\widgets\new_item.dart:
 
 Screen for adding a new grocery item to the list.
 ```
 
 ![Flutter shopping list - New Item screen.](./assets/images/new-item-screen.png)
+
+## Installation Instructions
+
+1. Install [Flutter SDK](https://docs.flutter.dev/get-started/install) and set up your environment.
+2. Clone this repository:
+   ```bash
+   git clone https://github.com/japinell/flutter_shopping_list.git
+   ```
+3. Install dependencies:
+   ```bash
+   flutter pub get
+   ```
+4. (Optional) Set up a `.env` file for your database configuration.
+5. Run the app:
+   ```bash
+   flutter run
+   ```
+
+## Configuration
+
+Create a `.env` file in the project root with the following variables:
+
+```
+DATABASE_URL=your-database-url
+DATABASE_TABLE=your-database-table
+```
+
+This is required for remote data storage and retrieval.
+
+## Packages Used
+
+- **http**: For making REST API calls to the backend database.
+- **flutter_dotenv**: For managing environment variables securely.
+- **provider**: For state management (if used in your codebase).
+
+### Packages Used
 
 ## License
 
