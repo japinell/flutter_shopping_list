@@ -43,12 +43,20 @@ Defines a grocery item with id, name, quantity, and category.
 ![Flutter shopping list - Grocery Item model.](./assets/images/grocery-item-model.png)
 
 ```
---\lib\screens\grocery_list.dart:
+--\lib\widgets\grocery_list.dart:
 
 Fetches the grocery list from the backend database.
 ```
 
 ![Flutter shopping list - Grocery List retrieval.](./assets/images/grocery-list-retrieval.png)
+
+```
+--\lib\widgets\new_item.dart:
+
+Saves the grocery to the backend database.
+```
+
+![Flutter shopping list - Grocery List retrieval.](./assets/images/new-item-save.png)
 
 ## Main Screens
 
